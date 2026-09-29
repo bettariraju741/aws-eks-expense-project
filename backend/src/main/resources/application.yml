@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+
+  application:
+    name: expense-backend
+
+  datasource:
+
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/expenses
+
+    username: ${DB_USERNAME:expense}
+
+    password: ${DB_PASSWORD:expense123}
+
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+
+    hibernate:
+      ddl-auto: update
+
+    show-sql: false
+
+    properties:
+      hibernate:
+        format_sql: true
+
+management:
+
+  endpoints:
+
+    web:
+      exposure:
+        include:
+          - health
+          - info
+          - metrics
+
+  endpoint:
+
+    health:
+
+      probes:
+        enabled: true
