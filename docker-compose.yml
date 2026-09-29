@@ -1,0 +1,92 @@
+services:
+
+  mysql:
+
+    image: mysql:8.0
+
+    container_name: expense-mysql
+
+    environment:
+      MYSQL_DATABASE: expenses
+      MYSQL_USER: expense
+      MYSQL_PASSWORD: expense123
+      MYSQL_ROOT_PASSWORD: root123
+
+    ports:
+      - "3306:3306"
+
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-proot123"
+        ]
+
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    networks:
+      - expense-network
+
+
+  backend:
+
+    image: expense-backend:1.0.0
+
+    container_name: expense-backend
+
+    environment:
+
+      DB_HOST: mysql
+
+      DB_USERNAME: expense
+
+      DB_PASSWORD: expense123
+
+    ports:
+      - "8080:8080"
+
+    depends_on:
+
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - expense-network
+
+
+  frontend:
+
+    image: expense-frontend:1.0.0
+
+    container_name: expense-frontend
+
+    ports:
+      - "3000:3000"
+
+    depends_on:
+
+      - backend
+
+    networks:
+      - expense-network
+
+
+networks:
+
+  expense-network:
+
+
+volumes:
+
+  mysql-data:
