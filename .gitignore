@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log
+
+# Java
+target/
+*.class
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+crash.log
+crash.*.log
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# AWS
+.aws/
+
+# Kubernetes secrets
+*-secret.yaml
+secret.yaml
