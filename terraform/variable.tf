@@ -60,3 +60,33 @@ variable "single_nat_gateway" {
   type        = bool
   default     = true
 }
+
+variable "db_name" {
+  description = "Expense database name"
+  type        = string
+  default     = "expenses"
+}
+
+variable "db_username" {
+  description = "Expense database username"
+  type        = string
+  default     = "expense"
+}
+
+variable "db_instance_class" {
+  description = "RDS instance class"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "db_allocated_storage" {
+  description = "RDS allocated storage in GB"
+  type        = number
+  default     = 20
+}
+
+variable "db_multi_az" {
+  description = "Enable RDS Multi-AZ"
+  type        = bool
+  default     = false
+}

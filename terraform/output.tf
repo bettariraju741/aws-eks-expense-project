@@ -27,3 +27,20 @@ output "nat_gateway_ids" {
 
   value = module.vpc.nat_gateway_ids
 }
+output "rds_endpoint" {
+  description = "RDS endpoint"
+
+  value = module.rds.db_endpoint
+}
+
+output "rds_port" {
+  description = "RDS port"
+
+  value = module.rds.db_port
+}
+
+output "rds_security_group_id" {
+  description = "RDS security group ID"
+
+  value = module.rds.security_group_id
+}
