@@ -37,7 +37,7 @@ spec:
 
       containers:
         - name: backend
-          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:v2
+          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:v3
           imagePullPolicy: IfNotPresent
           ports:
             - name: http

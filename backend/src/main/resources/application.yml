@@ -15,21 +15,18 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
-      hibernate:
     hibernate:
       ddl-auto: update
     show-sql: false
     properties:
+      hibernate:
         format_sql: true
-      exposure:
 
 management:
-          - health
   endpoints:
     web:
-        include:
-          - info
-          - metrics
+      exposure:
+        include: [health, info, metrics]
   endpoint:
     health:
       probes:
