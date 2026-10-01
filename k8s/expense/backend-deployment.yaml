@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expense-backend
+  namespace: expense
+  labels:
+    app: expense-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expense-backend
+  template:
+    metadata:
+      labels:
+        app: expense-backend
+    spec:
+      serviceAccountName: expense-backend
+
+      # The shared volume is group-accessible by UID/GID 1000.
+      securityContext:
+        fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
+
+      initContainers:
+        - name: fetch-rds-secret
+          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:secret-init-v1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: AWS_REGION
+              value: us-east-1
+            - name: SECRET_ARN
+              value: arn:aws:secretsmanager:us-east-1:318432260649:secret:rds!db-cda3a710-34d3-4532-a214-e6db1909ac28-nqX2KG
+          volumeMounts:
+            - name: app-secrets
+              mountPath: /run/secrets
+
+      containers:
+        - name: backend
+          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:v2
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          env:
+            - name: DB_HOST
+              value: expense-dev-mysql.ckb4k8koi44i.us-east-1.rds.amazonaws.com
+          volumeMounts:
+            - name: app-secrets
+              mountPath: /run/secrets
+              readOnly: true
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            periodSeconds: 20
+            failureThreshold: 3
+
+      volumes:
+        - name: app-secrets
+          emptyDir:
+            medium: Memory
