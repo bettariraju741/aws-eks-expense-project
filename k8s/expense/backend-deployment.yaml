@@ -24,7 +24,7 @@ spec:
 
       initContainers:
         - name: fetch-rds-secret
-          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:secret-init-v1
+          image: 318432260649.dkr.ecr.us-east-1.amazonaws.com/expense-dev-backend:secret-init-v2
           imagePullPolicy: IfNotPresent
           env:
             - name: AWS_REGION
