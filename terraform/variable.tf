@@ -90,3 +90,55 @@ variable "db_multi_az" {
   type        = bool
   default     = false
 }
+variable "eks_cluster_name" {
+  description = "EKS cluster name"
+  type        = string
+  default     = "expense-dev-eks"
+}
+
+variable "kubernetes_version" {
+  description = "Kubernetes version"
+  type        = string
+  default     = "1.35"
+}
+
+variable "eks_public_access_cidrs" {
+  description = "CIDRs allowed to access EKS public API"
+  type        = list(string)
+}
+
+variable "eks_node_instance_types" {
+  description = "EKS node instance types"
+  type        = list(string)
+  default     = ["t3.medium"]
+}
+
+variable "eks_node_capacity_type" {
+  description = "EKS node capacity type"
+  type        = string
+  default     = "ON_DEMAND"
+}
+
+variable "eks_node_min_size" {
+  description = "Minimum EKS nodes"
+  type        = number
+  default     = 1
+}
+
+variable "eks_node_desired_size" {
+  description = "Desired EKS nodes"
+  type        = number
+  default     = 1
+}
+
+variable "eks_node_max_size" {
+  description = "Maximum EKS nodes"
+  type        = number
+  default     = 2
+}
+
+variable "eks_node_disk_size" {
+  description = "EKS node disk size"
+  type        = number
+  default     = 20
+}

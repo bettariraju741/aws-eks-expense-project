@@ -41,3 +41,26 @@ module "rds" {
   allocated_storage = var.db_allocated_storage
   multi_az          = var.db_multi_az
 }
+module "eks" {
+  source = "./modules/eks"
+
+  project_name = var.project_name
+  environment  = var.environment
+
+  cluster_name       = var.eks_cluster_name
+  kubernetes_version = var.kubernetes_version
+
+  vpc_id             = module.vpc.vpc_id
+  private_subnet_ids = module.vpc.private_subnet_ids
+
+  public_access_cidrs = var.eks_public_access_cidrs
+
+  node_instance_types = var.eks_node_instance_types
+  node_capacity_type  = var.eks_node_capacity_type
+
+  node_min_size     = var.eks_node_min_size
+  node_desired_size = var.eks_node_desired_size
+  node_max_size     = var.eks_node_max_size
+
+  node_disk_size = var.eks_node_disk_size
+}
