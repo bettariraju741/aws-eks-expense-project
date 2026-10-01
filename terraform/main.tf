@@ -64,3 +64,16 @@ module "eks" {
 
   node_disk_size = var.eks_node_disk_size
 }
+module "alb_controller" {
+  source = "./modules/alb-controller"
+
+  cluster_name = module.eks.cluster_name
+  region       = var.aws_region
+  vpc_id       = module.vpc.vpc_id
+  account_id   = data.aws_caller_identity.current.account_id
+
+  depends_on = [
+    module.eks
+  ]
+}
+data "aws_caller_identity" "current" {}

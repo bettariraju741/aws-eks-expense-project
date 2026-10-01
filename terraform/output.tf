@@ -44,3 +44,17 @@ output "rds_security_group_id" {
 
   value = module.rds.security_group_id
 }
+output "alb_controller_iam_role_arn" {
+  description = "IAM role ARN used by the AWS Load Balancer Controller"
+  value       = module.alb_controller.iam_role_arn
+}
+
+output "alb_controller_pod_identity_association_id" {
+  description = "EKS Pod Identity association ID for the AWS Load Balancer Controller"
+  value       = module.alb_controller.pod_identity_association_id
+}
+
+output "alb_controller_helm_release_name" {
+  description = "Helm release name of the AWS Load Balancer Controller"
+  value       = module.alb_controller.helm_release_name
+}
