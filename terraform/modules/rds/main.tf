@@ -61,3 +61,13 @@ resource "aws_db_instance" "this" {
     Name = "${local.name_prefix}-mysql"
   }
 }
+resource "aws_vpc_security_group_ingress_rule" "mysql_from_eks" {
+  security_group_id            = aws_security_group.rds.id
+  referenced_security_group_id = var.eks_node_security_group_id
+
+  ip_protocol = "tcp"
+  from_port   = 3306
+  to_port     = 3306
+
+  description = "Allow MySQL from EKS worker nodes"
+}

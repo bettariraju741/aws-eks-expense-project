@@ -37,9 +37,10 @@ module "rds" {
   db_name     = var.db_name
   db_username = var.db_username
 
-  instance_class    = var.db_instance_class
-  allocated_storage = var.db_allocated_storage
-  multi_az          = var.db_multi_az
+  instance_class             = var.db_instance_class
+  allocated_storage          = var.db_allocated_storage
+  multi_az                   = var.db_multi_az
+  eks_node_security_group_id = "sg-05171e4b3ba6b6056"
 }
 module "eks" {
   source = "./modules/eks"
@@ -83,10 +84,5 @@ module "backend_identity" {
   environment    = var.environment
   cluster_name   = module.eks.cluster_name
   rds_secret_arn = module.rds.master_user_secret_arn
-
-  depends_on = [
-    module.eks,
-    module.rds
-  ]
 }
 data "aws_caller_identity" "current" {}

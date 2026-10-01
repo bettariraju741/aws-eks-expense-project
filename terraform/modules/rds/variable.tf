@@ -63,3 +63,7 @@ variable "deletion_protection" {
   type        = bool
   default     = false
 }
+variable "eks_node_security_group_id" {
+  description = "EKS node security group allowed to connect to RDS"
+  type        = string
+}
