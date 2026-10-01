@@ -76,4 +76,17 @@ module "alb_controller" {
     module.eks
   ]
 }
+module "backend_identity" {
+  source = "./modules/backend-identity"
+
+  project_name   = var.project_name
+  environment    = var.environment
+  cluster_name   = module.eks.cluster_name
+  rds_secret_arn = module.rds.master_user_secret_arn
+
+  depends_on = [
+    module.eks,
+    module.rds
+  ]
+}
 data "aws_caller_identity" "current" {}

@@ -33,3 +33,9 @@ output "subnet_group_name" {
 
   value = aws_db_subnet_group.this.name
 }
+
+output "master_user_secret_arn" {
+  description = "ARN of the Secrets Manager secret containing the RDS master credentials"
+
+  value = aws_db_instance.this.master_user_secret[0].secret_arn
+}
