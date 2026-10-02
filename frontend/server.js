@@ -7,15 +7,23 @@ const PORT = process.env.PORT || 3000;
 const BACKEND_URL =
     process.env.BACKEND_URL || "http://expense-backend.expense.svc.cluster.local:8080";
 
+// Basic HTTP security headers
+app.disable("x-powered-by");
+
+app.use((req, res, next) => {
+    res.setHeader("X-Content-Type-Options", "nosniff");
+    res.setHeader("X-Frame-Options", "DENY");
+    res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+    res.setHeader("Strict-Transport-Security", "max-age=31536000");
+    next();
+});
+
 app.use(express.json());
 
 // Forward API requests to the backend service
 app.use("/api", async (req, res) => {
     try {
         const targetUrl = `${BACKEND_URL}${req.originalUrl}`;
-
-        console.log("Frontend request:", req.method, req.originalUrl);
-        console.log("Proxy target:", targetUrl);
 
         const response = await fetch(targetUrl, {
             method: req.method,
@@ -29,8 +37,6 @@ app.use("/api", async (req, res) => {
 
         const responseBody = await response.text();
 
-        console.log("Backend response:", response.status, responseBody);
-
         res.status(response.status);
 
         const contentType = response.headers.get("content-type");
@@ -40,7 +46,7 @@ app.use("/api", async (req, res) => {
 
         res.send(responseBody);
     } catch (error) {
-        console.error("Backend proxy error:", error);
+        console.error("Backend proxy error:", error.message);
         res.status(502).json({
             message: "Unable to connect to backend service"
         });

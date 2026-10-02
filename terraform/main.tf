@@ -40,7 +40,7 @@ module "rds" {
   instance_class             = var.db_instance_class
   allocated_storage          = var.db_allocated_storage
   multi_az                   = var.db_multi_az
-  eks_node_security_group_id = "sg-05171e4b3ba6b6056"
+  eks_node_security_group_id = "sg-008fbb7739e58ffde"
 }
 module "eks" {
   source = "./modules/eks"

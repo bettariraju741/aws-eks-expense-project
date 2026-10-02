@@ -30,7 +30,7 @@ spec:
             - name: AWS_REGION
               value: us-east-1
             - name: SECRET_ARN
-              value: arn:aws:secretsmanager:us-east-1:318432260649:secret:rds!db-cda3a710-34d3-4532-a214-e6db1909ac28-nqX2KG
+              value: arn:aws:secretsmanager:us-east-1:318432260649:secret:rds!db-32b7fb1c-7219-4436-8a6b-357d0bd6823d-b44rwT
           volumeMounts:
             - name: app-secrets
               mountPath: /run/secrets
