@@ -38,3 +38,7 @@ Thumbs.db
 *-secret.yaml
 secret.yaml
 terraform/terraform-state-before-alb-import.json
+
+# Terraform plan files
+*.tfplan
+tfplan
