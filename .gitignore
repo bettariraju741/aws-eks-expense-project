@@ -37,3 +37,4 @@ Thumbs.db
 # Kubernetes secrets
 *-secret.yaml
 secret.yaml
+terraform/terraform-state-before-alb-import.json
